@@ -1,0 +1,40 @@
+<odoo>
+    <record id="hr_hospital_visit_list" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.list ()</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_form" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.form ()</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_action" model="ir.actions.act_window">
+        <field name="name">Visit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.hospital.visit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="hr_hospital_visit_menu"
+              name="Visits"
+              parent="hr_hospital_main_menu"
+              action="hr_hospital_visit_action"/>
+</odoo>

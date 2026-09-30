@@ -1,0 +1,11 @@
+<odoo>
+    <record id="hr_hospital_patient_1" model="hr.hospital.patient">
+        <field name="name">Patient demo one</field>
+    </record>
+    <record id="hr_hospital_patient_2" model="hr.hospital.patient">
+        <field name="name">Patient demo two</field>
+    </record>
+    <record id="hr_hospital_patient_3" model="hr.hospital.patient">
+        <field name="name">Patient demo three</field>
+    </record>
+</odoo>

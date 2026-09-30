@@ -1,0 +1,12 @@
+<odoo>
+    <record id="hr_hospital_doctor_1" model="hr.hospital.doctor">
+        <field name="name">Doctor demo one</field>
+    </record>
+    <record id="hr_hospital_doctor_2" model="hr.hospital.doctor">
+        <field name="name">Doctor demo two</field>
+    </record>
+    <record id="hr_hospital_doctor_3" model="hr.hospital.doctor">
+        <field name="name">Doctor demo three</field>
+        <field name="doctor_id" ref="hr_hospital_doctor_1"/>
+    </record>
+</odoo>
