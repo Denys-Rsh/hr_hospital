@@ -11,7 +11,10 @@
         "views/hr_hospital_patient_views.xml",
         "views/hr_hospital_disease_views.xml",
         "views/hr_hospital_visit_views.xml",
+        "views/hr_hospital_doctor_category_views.xml",
+        "views/hr_hospital_doctor_history_views.xml",
         "data/hr_hospital_disease_data.xml",
+        "data/hr_hospital_doctor_category_data.xml",
     ],
 
     "demo": [

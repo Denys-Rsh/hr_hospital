@@ -7,3 +7,8 @@ class HrHospitalDoctor(models.Model):
 
     name = fields.Char(required=True)
     doctor_id = fields.Many2one(comodel_name='hr.hospital.doctor')
+    category_id = fields.Many2one(comodel_name='hr.hospital.doctor.category')
+    history_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor.history',
+        inverse_name='doctor_id',
+    )

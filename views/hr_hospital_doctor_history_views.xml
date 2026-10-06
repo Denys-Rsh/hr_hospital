@@ -1,0 +1,48 @@
+<odoo>
+    <record id="hr_hospital_doctor_history_list" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.history.list ()</field>
+        <field name="model">hr.hospital.doctor.history</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="patient_id" />
+                <field name="doctor_id" />
+                <field name="appointment_date" />
+                <field name="doctor_shift_date" />
+                <field name="active" />
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_hospital_doctor_history_form" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.history.form ()</field>
+        <field name="model">hr.hospital.doctor.history</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_id" />
+                            <field name="doctor_id" />
+                            <field name="appointment_date" />
+                            <field name="doctor_shift_date" />
+                            <field name="active" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_hospital_doctor_history_action" model="ir.actions.act_window">
+        <field name="name">History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.hospital.doctor.history</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="hr_hospital_doctor_history_menu"
+              parent="hr_hospital_main_menu"
+              name="History"
+              action="hr_hospital_doctor_history_action" />
+</odoo>

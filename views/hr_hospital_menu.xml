@@ -17,4 +17,12 @@
     <menuitem id="hr_hospital_visit_menu"
               parent="hr_hospital_main_menu"
               name="Visits" />
+
+    <menuitem id="hr_hospital_doctor_category_menu"
+              parent="hr_hospital_main_menu"
+              name="Categories" />
+
+    <menuitem id="hr_hospital_doctor_history_menu"
+              parent="hr_hospital_main_menu"
+              name="History" />
 </odoo>

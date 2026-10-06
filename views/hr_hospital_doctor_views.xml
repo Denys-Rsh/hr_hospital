@@ -20,6 +20,7 @@
                         <group>
                             <field name="name" />
                             <field name="doctor_id" />
+                            <field name="history_ids" />
                         </group>
                     </group>
                 </sheet>
