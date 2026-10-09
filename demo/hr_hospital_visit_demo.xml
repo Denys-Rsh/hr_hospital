@@ -1,0 +1,44 @@
+<odoo>
+    <record id="hr_hospital_visit_1" model="hr.hospital.visit">
+        <field name="name">Visit demo one</field>
+        <field name="status">scheduled</field>
+        <field name="scheduled_datetime">2026-10-06 09:00:00</field>
+        <field name="doctor_id" ref="hr_hospital_doctor_1"/>
+        <field name="patient_id" ref="hr_hospital_patient_1"/>
+    </record>
+    <record id="hr_hospital_visit_2" model="hr.hospital.visit">
+        <field name="name">Visit demo two</field>
+        <field name="status">scheduled</field>
+        <field name="scheduled_datetime">2026-10-06 10:00:00</field>
+        <field name="doctor_id" ref="hr_hospital_doctor_1"/>
+        <field name="patient_id" ref="hr_hospital_patient_2"/>
+    </record>
+    <record id="hr_hospital_visit_3" model="hr.hospital.visit">
+        <field name="name">Visit demo three</field>
+        <field name="status">scheduled</field>
+        <field name="scheduled_datetime">2026-10-06 11:00:00</field>
+        <field name="doctor_id" ref="hr_hospital_doctor_1"/>
+        <field name="patient_id" ref="hr_hospital_patient_3"/>
+    </record>
+    <record id="hr_hospital_visit_4" model="hr.hospital.visit">
+        <field name="name">Visit demo four</field>
+        <field name="status">scheduled</field>
+        <field name="scheduled_datetime">2026-10-06 12:00:00</field>
+        <field name="doctor_id" ref="hr_hospital_doctor_2"/>
+        <field name="patient_id" ref="hr_hospital_patient_1"/>
+    </record>
+    <record id="hr_hospital_visit_5" model="hr.hospital.visit">
+        <field name="name">Visit demo five</field>
+        <field name="status">scheduled</field>
+        <field name="scheduled_datetime">2026-10-06 13:00:00</field>
+        <field name="doctor_id" ref="hr_hospital_doctor_2"/>
+        <field name="patient_id" ref="hr_hospital_patient_2"/>
+    </record>
+    <record id="hr_hospital_visit_6" model="hr.hospital.visit">
+        <field name="name">Visit demo six</field>
+        <field name="status">scheduled</field>
+        <field name="scheduled_datetime">2026-10-06 14:00:00</field>
+        <field name="doctor_id" ref="hr_hospital_doctor_2"/>
+        <field name="patient_id" ref="hr_hospital_patient_3"/>
+    </record>
+</odoo>

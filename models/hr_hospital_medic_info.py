@@ -1,7 +1,8 @@
-from odoo import fields, models
+from dateutil.relativedelta import relativedelta
+from odoo import fields, models, api
 
-class HospitalMedicInfo(models.AbstractModel):
-    _name = 'hospital.medic_info'
+class HrHospitalMedicInfo(models.AbstractModel):
+    _name = 'hr.hospital.medic.info'
     _description = 'Hospital Medic Info'
 
     blood_type = fields.Selection(
@@ -29,6 +30,7 @@ class HospitalMedicInfo(models.AbstractModel):
     birth_date = fields.Date(string='Дата народження', required=True)
     age = fields.Integer(string='Вік', compute='_compute_age')
 
+    @api.depends('birth_date')
     def _compute_age(self):
         for record in self:
-            record.age = fields.Date.today() - record.birth_date
+            record.age = relativedelta(fields.Date.today(), record.birth_date).years if record.birth_date else 0
