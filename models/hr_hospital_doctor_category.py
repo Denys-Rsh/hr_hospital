@@ -16,5 +16,3 @@ class HrHospitalDoctorCategory(models.Model):
         'UNIQUE(name)',
         'Doctor category name must be unique.',
     )
-
-

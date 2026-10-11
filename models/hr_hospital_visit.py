@@ -1,5 +1,5 @@
-from odoo import fields, models, api
-from odoo.exceptions import ValidationError, UserError
+from odoo import api, fields, models
+from odoo.exceptions import UserError, ValidationError
 
 
 class HrHospitalVisit(models.Model):
@@ -13,7 +13,7 @@ class HrHospitalVisit(models.Model):
             ('completed', 'Завершено'),
             ('cancelled', 'Скасовано'),
         ],
-        string='Статус візиту'
+        string='Статус візиту',
     )
     scheduled_datetime = fields.Datetime(string='Заплановану дату та час візиту')
     visit_datetime = fields.Datetime(string='Дату та час, коли візит відбувся')
@@ -43,7 +43,4 @@ class HrHospitalVisit(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_except_visited(self):
         if any(record.status == 'completed' for record in self):
-            raise UserError(
-                'Заборонено видаляти запис візиту, що вже відбувся.'
-            )
-
+            raise UserError('Заборонено видаляти запис візиту, що вже відбувся.')

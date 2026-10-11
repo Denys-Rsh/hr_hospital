@@ -1,4 +1,4 @@
-from odoo import fields, models, api
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -26,7 +26,7 @@ class HrHospitalDisease(models.Model):
     @api.constrains('parent_id')
     def _check_parent_id(self):
         if self._has_cycle():
-            raise ValidationError("You cannot create recursive categories!")
+            raise ValidationError('You cannot create recursive categories!')
 
     @api.depends('name', 'parent_id.display_name')
     @api.depends_context('hierarchical_naming')
@@ -34,8 +34,6 @@ class HrHospitalDisease(models.Model):
         hierarchical = self.env.context.get('hierarchical_naming', True)
         for record in self:
             if hierarchical and record.parent_id:
-                record.display_name = (
-                    f"{record.parent_id.display_name} / {record.name}"
-                )
+                record.display_name = f'{record.parent_id.display_name} / {record.name}'
             else:
                 record.display_name = record.name
