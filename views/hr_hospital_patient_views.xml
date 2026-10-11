@@ -5,6 +5,13 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="insurance_policy_number" />
+                <field name="gender" />
+                <field name="birth_date" />
+                <field name="age" />
+                <field name="blood_type" />
+                <field name="doctor_id" />
+                <field name="history_ids" />
             </list>
         </field>
     </record>
@@ -19,6 +26,13 @@
                     <group>
                         <group>
                             <field name="name" />
+                            <field name="insurance_policy_number" />
+                            <field name="gender" />
+                            <field name="birth_date" />
+                            <field name="age" />
+                            <field name="blood_type" />
+                            <field name="doctor_id" />
+                            <field name="history_ids" />
                         </group>
                     </group>
                 </sheet>

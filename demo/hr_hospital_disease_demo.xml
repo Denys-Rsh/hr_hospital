@@ -1,0 +1,21 @@
+<odoo>
+    <record id="hr_hospital_disease_demo_respiratory" model="hr.hospital.disease">
+        <field name="name">Респіраторні інфекції</field>
+    </record>
+    <record id="hr_hospital_disease_demo_cold" model="hr.hospital.disease">
+        <field name="name">Застуда</field>
+        <field name="parent_id" ref="hr_hospital_disease_demo_respiratory"/>
+    </record>
+    <record id="hr_hospital_disease_demo_runny_nose" model="hr.hospital.disease">
+        <field name="name">Нежить</field>
+        <field name="parent_id" ref="hr_hospital_disease_demo_cold"/>
+    </record>
+    <record id="hr_hospital_disease_demo_sore_throat" model="hr.hospital.disease">
+        <field name="name">Фарингіт</field>
+        <field name="parent_id" ref="hr_hospital_disease_demo_respiratory"/>
+    </record>
+    <record id="hr_hospital_disease_demo_cough" model="hr.hospital.disease">
+        <field name="name">Легкий кашель</field>
+        <field name="parent_id" ref="hr_hospital_disease_demo_respiratory"/>
+    </record>
+</odoo>

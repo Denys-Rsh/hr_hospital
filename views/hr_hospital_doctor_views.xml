@@ -5,6 +5,15 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="doctor_id" />
+                <field name="category_id" />
+                <field name="history_ids" />
+                <field name="user_id" />
+                <field name="is_intern" />
+                <field name="blood_type" />
+                <field name="gender" />
+                <field name="birth_date" />
+                <field name="age" />
             </list>
         </field>
     </record>
@@ -19,7 +28,15 @@
                     <group>
                         <group>
                             <field name="name" />
-                            <field name="doctor_id" />
+                            <field name="doctor_id" invisible="is_intern == 0" />
+                            <field name="history_ids" />
+                            <field name="category_id" />
+                            <field name="user_id" />
+                            <field name="is_intern"/>
+                            <field name="blood_type" />
+                            <field name="gender" />
+                            <field name="birth_date" />
+                            <field name="age" />
                         </group>
                     </group>
                 </sheet>

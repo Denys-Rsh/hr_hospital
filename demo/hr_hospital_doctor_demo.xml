@@ -1,12 +1,24 @@
 <odoo>
     <record id="hr_hospital_doctor_1" model="hr.hospital.doctor">
         <field name="name">Doctor demo one</field>
+        <field name="category_id" ref="hr_hospital_doctor_category_3"/>
+        <field name="blood_type">a_positive</field>
+        <field name="gender">male</field>
+        <field name="birth_date">1975-03-14</field>
     </record>
     <record id="hr_hospital_doctor_2" model="hr.hospital.doctor">
         <field name="name">Doctor demo two</field>
+        <field name="category_id" ref="hr_hospital_doctor_category_2"/>
+        <field name="blood_type">o_negative</field>
+        <field name="gender">female</field>
+        <field name="birth_date">1982-09-02</field>
     </record>
     <record id="hr_hospital_doctor_3" model="hr.hospital.doctor">
         <field name="name">Doctor demo three</field>
+        <field name="category_id" ref="hr_hospital_doctor_category_1"/>
         <field name="doctor_id" ref="hr_hospital_doctor_1"/>
+        <field name="blood_type">b_positive</field>
+        <field name="gender">male</field>
+        <field name="birth_date">1990-11-25</field>
     </record>
 </odoo>

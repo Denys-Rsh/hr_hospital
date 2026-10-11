@@ -1,0 +1,11 @@
+<odoo>
+    <record id="hr_hospital_doctor_category_1" model="hr.hospital.doctor.category">
+        <field name="name">Intern</field>
+    </record>
+    <record id="hr_hospital_doctor_category_2" model="hr.hospital.doctor.category">
+        <field name="name">Specialist</field>
+    </record>
+    <record id="hr_hospital_doctor_category_3" model="hr.hospital.doctor.category">
+        <field name="name">Highest Category</field>
+    </record>
+</odoo>
