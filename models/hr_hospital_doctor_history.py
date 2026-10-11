@@ -22,6 +22,7 @@ class HrHospitalDoctorHistory(models.Model):
                     'message': 'Дата зміни лікаря не може бути раніше ніж дата призначення',
                 },
             }
+        return None
 
     @api.constrains('appointment_date', 'doctor_shift_date')
     def _check_doctor_shift_date(self):
