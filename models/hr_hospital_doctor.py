@@ -27,15 +27,15 @@ class HrHospitalDoctor(models.Model):
 
     @api.depends('category_id.name')
     def _compute_is_intern(self):
-        """ I considered three options:
-            1. Marking the doctor as an intern manually. I rejected this because it violates the task requirements: `is_intern`
-            must be a calculated field.
-            2. Checking a flag on the category indicating that the category corresponds to an intern.
-            3. Comparing the category name against a constant.
+        """I considered three options:
+        1. Marking the doctor as an intern manually. I rejected this because it violates the task requirements: `is_intern`
+        must be a calculated field.
+        2. Checking a flag on the category indicating that the category corresponds to an intern.
+        3. Comparing the category name against a constant.
 
-            I chose option 3. Although option 2 is clearer and resilient to category renaming, option 3 has its own
-            advantages: it meets the task requirements, is simpler to implement, and does not require an additional
-            database field. Both options are vulnerable to category deletion unless safeguards are in place.
+        I chose option 3. Although option 2 is clearer and resilient to category renaming, option 3 has its own
+        advantages: it meets the task requirements, is simpler to implement, and does not require an additional
+        database field. Both options are vulnerable to category deletion unless safeguards are in place.
         """
         for record in self:
             record.is_intern = record.category_id.name == 'Intern'
