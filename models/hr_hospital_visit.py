@@ -14,6 +14,7 @@ class HrHospitalVisit(models.Model):
             ('cancelled', 'Скасовано'),
         ],
         string='Статус візиту',
+        default='scheduled',
     )
     scheduled_datetime = fields.Datetime(string='Заплановану дату та час візиту')
     visit_datetime = fields.Datetime(string='Дату та час, коли візит відбувся')
