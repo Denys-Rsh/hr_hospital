@@ -24,6 +24,18 @@
             <form>
                 <header />
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_same_disease_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-stethoscope"
+                        >
+                            <field name="same_disease_visit_count"
+                                   string="Visits with disease"
+                                   widget="statinfo"
+                            />
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="name" />
