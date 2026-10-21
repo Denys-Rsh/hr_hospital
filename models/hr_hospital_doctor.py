@@ -16,6 +16,10 @@ class HrHospitalDoctor(models.Model):
         store=True,
         readonly=False,
     )
+    mentor_name = fields.Char(related='doctor_id.name', string='ПІБ ментора')
+    mentor_category_id = fields.Many2one(related='doctor_id.category_id', string='Категорія ментора')
+    mentor_gender = fields.Selection(related='doctor_id.gender', string='Стать ментора')
+    mentor_age = fields.Integer(related='doctor_id.age', string='Вік ментора')
     category_id = fields.Many2one(string='Категорія', comodel_name='hr.hospital.doctor.category')
     history_ids = fields.One2many(comodel_name='hr.hospital.doctor.history', inverse_name='doctor_id')
     user_id = fields.Many2one(comodel_name='res.users')
@@ -24,11 +28,7 @@ class HrHospitalDoctor(models.Model):
         compute='_compute_is_intern',
         store=True,
     )
-    intern_ids = fields.One2many(
-        comodel_name='hr.hospital.doctor',
-        inverse_name='doctor_id',
-        string="Інтерни"
-    )
+    intern_ids = fields.One2many(comodel_name='hr.hospital.doctor', inverse_name='doctor_id', string='Інтерни')
 
     @api.depends('category_id.name')
     def _compute_is_intern(self):

@@ -39,6 +39,12 @@
                             <field name="age" />
                             <field name="intern_ids" />
                         </group>
+                        <group string="Ментор" invisible="not doctor_id">
+                            <field name="mentor_name" />
+                            <field name="mentor_category_id" />
+                            <field name="mentor_gender" />
+                            <field name="mentor_age" />
+                        </group>
                     </group>
                 </sheet>
             </form>
