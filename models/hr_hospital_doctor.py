@@ -55,3 +55,19 @@ class HrHospitalDoctor(models.Model):
     def _check_is_intern(self):
         if any(record.doctor_id.is_intern for record in self):
             raise ValidationError('Не можна зберегти запис, якщо обраний ментор є інтерном')
+
+    def action_quick_create_visit(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': f'Запис до лікаря: {self.name}',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'views': [(self.env.ref('hr_hospital.hr_hospital_visit_form').id, 'form')],
+            'target': 'new',
+            'context': {
+                'default_doctor_id': self.id,
+                'default_name': f'Візит до {self.name}',
+                'default_scheduled_datetime': fields.Datetime.to_string(fields.Datetime.now()),
+            },
+        }

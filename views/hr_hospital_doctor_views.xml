@@ -63,6 +63,13 @@
                 <templates>
                     <t t-name="card">
                         <field name="name" class="fw-bold fs-5"/>
+                        <footer>
+                            <button name="action_quick_create_visit"
+                                    type="object"
+                                    string="Записати на візит"
+                                    icon="fa-calendar-plus-o"
+                                    class="btn btn-sm btn-primary"/>
+                        </footer>
                     </t>
                 </templates>
             </kanban>
