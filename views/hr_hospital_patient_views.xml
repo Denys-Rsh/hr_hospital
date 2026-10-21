@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="phone" />
                 <field name="insurance_policy_number" />
                 <field name="gender" />
                 <field name="birth_date" />
@@ -21,22 +22,64 @@
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
             <form>
-                <header />
+                <header>
+                    <button name="action_create_visit"
+                            type="object"
+                            string="Створити візит"
+                            class="oe_highlight"
+                    />
+                </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-calendar"
+                        >
+                            <field name="visit_count"
+                                   string="Visits"
+                                   widget="statinfo"
+                            />
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="name" />
+                            <field name="phone" widget="phone" />
                             <field name="insurance_policy_number" />
                             <field name="gender" />
                             <field name="birth_date" />
                             <field name="age" />
                             <field name="blood_type" />
                             <field name="doctor_id" />
-                            <field name="history_ids" />
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Visits" name="visits">
+                            <field name="visit_ids" readonly="1" />
+                        </page>
+                        <page string="History" name="history">
+                            <field name="history_ids" />
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="hr_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.search</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="name"
+                       string="ПІБ або телефон"
+                       filter_domain="['|', ('name', 'ilike', self), ('phone', 'ilike', self)]"
+                />
+                <field name="name" string="ПІБ" />
+                <field name="phone" string="Телефон" />
+                <field name="doctor_id" />
+            </search>
         </field>
     </record>
 
@@ -45,6 +88,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hr.hospital.patient</field>
         <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="hr_hospital_patient_search"/>
     </record>
 
     <menuitem id="hr_hospital_patient_menu"
