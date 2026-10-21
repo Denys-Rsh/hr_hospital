@@ -37,10 +37,26 @@
                             <field name="gender" />
                             <field name="birth_date" />
                             <field name="age" />
+                            <field name="intern_ids" />
                         </group>
                     </group>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record id="hr_hospital_doctor_search" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.search</field>
+        <field name="model">hr.hospital.doctor</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Ментори"
+                        name="filter_mentor"
+                        domain="[('intern_ids', '!=', False)]"/>
+                <filter string="Інтерни"
+                        name="filter_intern"
+                        domain="[('is_intern', '=', 1)]"/>
+            </search>
         </field>
     </record>
 

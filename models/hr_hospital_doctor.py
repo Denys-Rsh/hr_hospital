@@ -24,6 +24,11 @@ class HrHospitalDoctor(models.Model):
         compute='_compute_is_intern',
         store=True,
     )
+    intern_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor',
+        inverse_name='doctor_id',
+        string="Інтерни"
+    )
 
     @api.depends('category_id.name')
     def _compute_is_intern(self):
