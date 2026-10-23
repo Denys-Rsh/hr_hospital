@@ -5,6 +5,7 @@ from odoo.exceptions import UserError, ValidationError
 class HrHospitalVisit(models.Model):
     _name = 'hr.hospital.visit'
     _description = 'Hospital visit'
+    _inherit = ['mail.thread']
 
     name = fields.Char(required=True)
     status = fields.Selection(
@@ -15,10 +16,11 @@ class HrHospitalVisit(models.Model):
         ],
         string='Статус візиту',
         default='scheduled',
+        tracking=True,
     )
     scheduled_datetime = fields.Datetime(string='Заплановану дату та час візиту')
     visit_datetime = fields.Datetime(string='Дату та час, коли візит відбувся')
-    doctor_id = fields.Many2one(string='Лікар', comodel_name='hr.hospital.doctor')
+    doctor_id = fields.Many2one(string='Лікар', comodel_name='hr.hospital.doctor', tracking=True)
     patient_id = fields.Many2one(string='Пацієнт', comodel_name='hr.hospital.patient')
     summary = fields.Html(string='Епікриз')
     disease_id = fields.Many2one(comodel_name='hr.hospital.disease', string='Хвороба')
