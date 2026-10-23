@@ -64,6 +64,13 @@
                     <t t-name="card">
                         <field name="name" class="fw-bold fs-5"/>
                         <footer>
+                            <!-- Обрано кнопку type="object": метод action_quick_create_visit повертає act_window
+                                 з target='new', а лікар, назва й дата підставляються у нову форму через ключі
+                                 default_<поле> у context, які зчитує default_get() моделі візиту.
+                                 Альтернативою була окрема ir.actions.act_window з context-дефолтами в XML, але там
+                                 незручно формувати динамічні значення (ім'я лікаря у назві, поточний час), тож
+                                 Python-метод простіший і його легко тестувати; quick_create відкинуто, бо він
+                                 працює лише в kanban візитів і заповнює тільки поле групування та name. -->
                             <button name="action_quick_create_visit"
                                     type="object"
                                     string="Записати на візит"
