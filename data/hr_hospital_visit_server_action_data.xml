@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_hospital_visit_action_cancel_overdue" model="ir.actions.server">
+        <field name="name">Скасувати протерміновані візити</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="binding_model_id" ref="model_hr_hospital_visit"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_cancel_overdue_visits()</field>
+    </record>
+</odoo>

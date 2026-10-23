@@ -55,6 +55,21 @@ class HrHospitalVisit(models.Model):
             'context': {'default_disease_id': self.disease_id.id},
         }
 
+    def _get_overdue_visits_domain(self):
+        return [
+            ('status', '=', 'scheduled'),
+            ('scheduled_datetime', '<', fields.Datetime.now()),
+        ]
+
+    def action_cancel_overdue_visits(self):
+        overdue = self.filtered_domain(self._get_overdue_visits_domain())
+        overdue.write({'status': 'cancelled'})
+        return overdue
+
+    @api.model
+    def _cron_cancel_overdue_visits(self):
+        return self.search(self._get_overdue_visits_domain()).action_cancel_overdue_visits()
+
     @api.onchange('visit_datetime', 'scheduled_datetime', 'doctor_id', 'active')
     def _onchange_fields(self):
         if self.status == 'completed':
