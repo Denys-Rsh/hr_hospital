@@ -1,18 +1,21 @@
 <odoo>
     <record id="hr_hospital_patient_1" model="hr.hospital.patient">
         <field name="name">Patient demo one</field>
+        <field name="phone">+380501112233</field>
         <field name="blood_type">o_positive</field>
         <field name="gender">female</field>
         <field name="birth_date">1995-06-18</field>
     </record>
     <record id="hr_hospital_patient_2" model="hr.hospital.patient">
         <field name="name">Patient demo two</field>
+        <field name="phone">+380672223344</field>
         <field name="blood_type">ab_positive</field>
         <field name="gender">male</field>
         <field name="birth_date">1968-01-30</field>
     </record>
     <record id="hr_hospital_patient_3" model="hr.hospital.patient">
         <field name="name">Patient demo three</field>
+        <field name="phone">+380933334455</field>
         <field name="blood_type">a_negative</field>
         <field name="gender">female</field>
         <field name="birth_date">2010-04-07</field>

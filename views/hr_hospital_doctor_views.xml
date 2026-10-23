@@ -37,6 +37,13 @@
                             <field name="gender" />
                             <field name="birth_date" />
                             <field name="age" />
+                            <field name="intern_ids" />
+                        </group>
+                        <group string="Ментор" invisible="not doctor_id">
+                            <field name="mentor_name" />
+                            <field name="mentor_category_id" />
+                            <field name="mentor_gender" />
+                            <field name="mentor_age" />
                         </group>
                     </group>
                 </sheet>
@@ -44,11 +51,58 @@
         </field>
     </record>
 
+    <record id="hr_hospital_doctor_kanban" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.kanban</field>
+        <field name="model">hr.hospital.doctor</field>
+        <field name="arch" type="xml">
+            <kanban string="Kanban Title" default_group_by="category_id">
+                <header>
+
+                </header>
+
+                <templates>
+                    <t t-name="card">
+                        <field name="name" class="fw-bold fs-5"/>
+                        <footer>
+                            <!-- Обрано кнопку type="object": метод action_quick_create_visit повертає act_window
+                                 з target='new', а лікар, назва й дата підставляються у нову форму через ключі
+                                 default_<поле> у context, які зчитує default_get() моделі візиту.
+                                 Альтернативою була окрема ir.actions.act_window з context-дефолтами в XML, але там
+                                 незручно формувати динамічні значення (ім'я лікаря у назві, поточний час), тож
+                                 Python-метод простіший і його легко тестувати; quick_create відкинуто, бо він
+                                 працює лише в kanban візитів і заповнює тільки поле групування та name. -->
+                            <button name="action_quick_create_visit"
+                                    type="object"
+                                    string="Записати на візит"
+                                    icon="fa-calendar-plus-o"
+                                    class="btn btn-sm btn-primary"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="hr_hospital_doctor_search" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.search</field>
+        <field name="model">hr.hospital.doctor</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Ментори"
+                        name="filter_mentor"
+                        domain="[('intern_ids', '!=', False)]"/>
+                <filter string="Інтерни"
+                        name="filter_intern"
+                        domain="[('is_intern', '=', 1)]"/>
+            </search>
+        </field>
+    </record>
+
     <record id="hr_hospital_doctor_action" model="ir.actions.act_window">
         <field name="name">Doctor</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hr.hospital.doctor</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,kanban,form</field>
     </record>
 
     <menuitem id="hr_hospital_doctor_menu"

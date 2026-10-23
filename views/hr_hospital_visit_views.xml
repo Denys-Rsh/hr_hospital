@@ -22,12 +22,30 @@
         <field name="model">hr.hospital.visit</field>
         <field name="arch" type="xml">
             <form>
-                <header />
+                <header>
+                    <field name="status"
+                           widget="statusbar"
+                           statusbar_visible="scheduled,completed,cancelled"
+                           options="{'clickable': '1'}"
+                    />
+                </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_same_disease_visits"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-stethoscope"
+                                invisible="not disease_id"
+                        >
+                            <field name="same_disease_visit_count"
+                                   string="Visits with disease"
+                                   widget="statinfo"
+                            />
+                        </button>
+                    </div>
                     <group>
                         <group>
                             <field name="name" />
-                            <field name="status" />
                             <field name="scheduled_datetime" />
                             <field name="visit_datetime" />
                             <field name="doctor_id" />
@@ -38,7 +56,80 @@
                         </group>
                     </group>
                 </sheet>
+                <chatter/>
             </form>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_calendar" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.calendar</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <calendar
+                    mode="month"
+                    date_start="scheduled_datetime"
+                    color="doctor_id"
+            >
+                <field name="name" />
+                <field name="patient_id" />
+                <field name="doctor_id" />
+                <field name="disease_id" />
+                <field name="status" />
+            </calendar>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_search" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.search</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <search string="Visits">
+                <field name="name" />
+                <field name="patient_id" />
+                <field name="doctor_id" />
+                <field name="disease_id" />
+                <filter name="current_year"
+                        date="scheduled_datetime"
+                        string="Current Year"
+                        default_period="year"
+                />
+                <group>
+                    <filter name="group_status"
+                        string="Status"
+                        context="{'group_by': 'status'}"/>
+                </group>
+                <searchpanel>
+                    <field name="doctor_id"
+                       select="multi"
+                       icon="fa-user-md"
+                       enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_pivot" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.pivot</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Visits Analysis" sample="1">
+                <field name="doctor_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="scheduled_datetime"
+                   interval="month"
+                   type="row"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="hr_hospital_visit_graph" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.graph</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <graph string="Visits by Month" type="bar" stacked="True" sample="1">
+                <field name="scheduled_datetime" interval="month"/>
+                <field name="disease_id"/>
+            </graph>
         </field>
     </record>
 
@@ -46,7 +137,8 @@
         <field name="name">Visit</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hr.hospital.visit</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,calendar,pivot,graph</field>
+        <field name="context">{'search_default_current_year': 1}</field>
     </record>
 
     <menuitem id="hr_hospital_visit_menu"

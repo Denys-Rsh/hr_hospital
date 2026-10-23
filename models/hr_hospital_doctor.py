@@ -16,6 +16,10 @@ class HrHospitalDoctor(models.Model):
         store=True,
         readonly=False,
     )
+    mentor_name = fields.Char(related='doctor_id.name', string='ПІБ ментора')
+    mentor_category_id = fields.Many2one(related='doctor_id.category_id', string='Категорія ментора')
+    mentor_gender = fields.Selection(related='doctor_id.gender', string='Стать ментора')
+    mentor_age = fields.Integer(related='doctor_id.age', string='Вік ментора')
     category_id = fields.Many2one(string='Категорія', comodel_name='hr.hospital.doctor.category')
     history_ids = fields.One2many(comodel_name='hr.hospital.doctor.history', inverse_name='doctor_id')
     user_id = fields.Many2one(comodel_name='res.users')
@@ -24,6 +28,7 @@ class HrHospitalDoctor(models.Model):
         compute='_compute_is_intern',
         store=True,
     )
+    intern_ids = fields.One2many(comodel_name='hr.hospital.doctor', inverse_name='doctor_id', string='Інтерни')
 
     @api.depends('category_id.name')
     def _compute_is_intern(self):
@@ -50,3 +55,19 @@ class HrHospitalDoctor(models.Model):
     def _check_is_intern(self):
         if any(record.doctor_id.is_intern for record in self):
             raise ValidationError('Не можна зберегти запис, якщо обраний ментор є інтерном')
+
+    def action_quick_create_visit(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': f'Запис до лікаря: {self.name}',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'views': [(self.env.ref('hr_hospital.hr_hospital_visit_form').id, 'form')],
+            'target': 'new',
+            'context': {
+                'default_doctor_id': self.id,
+                'default_name': f'Візит до {self.name}',
+                'default_scheduled_datetime': fields.Datetime.to_string(fields.Datetime.now()),
+            },
+        }

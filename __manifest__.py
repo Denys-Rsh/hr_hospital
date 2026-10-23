@@ -4,6 +4,8 @@
     "version": "19.0.1.0.0",
     "license": "OPL-1",
 
+    "depends": ["base", "mail"],
+
     "data": [
         "security/ir.model.access.csv",
         "views/hr_hospital_menu.xml",
@@ -15,8 +17,11 @@
         "views/hr_hospital_doctor_history_views.xml",
         "data/hr_hospital_disease_data.xml",
         "data/hr_hospital_doctor_category_data.xml",
+        "data/hr_hospital_visit_server_action_data.xml",
+        "data/hr_hospital_visit_cron_data.xml",
         "wizard/hr_hospital_mass_reassign_doctor_wizard_view.xml",
         "wizard/hr_hospital_visit_report_wizard_view.xml",
+        "wizard/hr_hospital_disease_report_wizard_view.xml",
     ],
 
     "demo": [
