@@ -8,6 +8,7 @@ class HrHospitalDoctor(models.Model):
     _inherit = 'hr.hospital.medic.info'
 
     name = fields.Char(required=True)
+    active = fields.Boolean(default=True)
     doctor_id = fields.Many2one(
         string='Ментор',
         comodel_name='hr.hospital.doctor',
