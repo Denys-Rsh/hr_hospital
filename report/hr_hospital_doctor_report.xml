@@ -14,6 +14,15 @@
     <template id="hr_hospital_doctor_report_template" name="Doctor report">
         <t t-call="web.html_container">
             <t t-set="company" t-value="res_company"/>
+            <!--
+                Розрив сторінок: t-call layout-у стоїть усередині t-foreach, тому кожен лікар отримує
+                власний <div class="article">, а ir.actions.report._prepare_html() передає кожен article
+                у wkhtmltopdf окремим тілом документа — він завжди починається з нового аркуша.
+                Альтернативою був один layout на всі записи і <div style="page-break-before: always;"/>
+                між лікарями (з t-if="not o_first", щоб не було порожнього першого аркуша), але від неї
+                відмовились: CSS-розриви у wkhtmltopdf ненадійні всередині flex/таблиць, а розрив через
+                article — штатний механізм Odoo, який не потребує спеціальної обробки першого/останнього запису.
+            -->
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.basic_layout">
                     <div class="header">
