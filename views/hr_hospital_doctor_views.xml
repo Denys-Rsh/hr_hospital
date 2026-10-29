@@ -38,6 +38,7 @@
                             <field name="birth_date" />
                             <field name="age" />
                             <field name="intern_ids" />
+                            <field name="patient_ids" />
                         </group>
                         <group string="Ментор" invisible="not doctor_id">
                             <field name="mentor_name" />

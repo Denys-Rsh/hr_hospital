@@ -29,6 +29,8 @@ class HrHospitalDoctor(models.Model):
         store=True,
     )
     intern_ids = fields.One2many(comodel_name='hr.hospital.doctor', inverse_name='doctor_id', string='Інтерни')
+    patient_ids = fields.One2many(comodel_name="hr.hospital.patient", inverse_name="doctor_id")
+    visit_ids = fields.One2many(comodel_name="hr.hospital.visit", inverse_name="doctor_id")
 
     @api.depends('category_id.name')
     def _compute_is_intern(self):
