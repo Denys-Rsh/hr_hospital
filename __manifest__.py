@@ -1,7 +1,7 @@
 {
     "name": "Hr hospital",
     "author": "Denys Rsh",
-    "version": "19.0.1.0.0",
+    "version": "19.0.2.0.0",
     "license": "OPL-1",
 
     "depends": ["base", "mail"],
@@ -22,6 +22,7 @@
         "wizard/hr_hospital_mass_reassign_doctor_wizard_view.xml",
         "wizard/hr_hospital_visit_report_wizard_view.xml",
         "wizard/hr_hospital_disease_report_wizard_view.xml",
+        "report/hr_hospital_doctor_report.xml",
     ],
 
     "demo": [

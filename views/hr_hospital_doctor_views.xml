@@ -38,6 +38,7 @@
                             <field name="birth_date" />
                             <field name="age" />
                             <field name="intern_ids" />
+                            <field name="patient_ids" />
                         </group>
                         <group string="Ментор" invisible="not doctor_id">
                             <field name="mentor_name" />
@@ -60,9 +61,22 @@
 
                 </header>
 
+                <field name="active"/>
                 <templates>
+                    <t t-name="menu">
+                        <a role="menuitem" type="open" class="dropdown-item">Відкрити</a>
+                        <a role="menuitem" type="object" name="action_quick_create_visit" class="dropdown-item">Записати на візит</a>
+                        <a t-if="record.active.raw_value" role="menuitem" type="archive" class="dropdown-item">Архівувати</a>
+                        <a t-if="!record.active.raw_value" role="menuitem" type="unarchive" class="dropdown-item">Розархівувати</a>
+                        <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Видалити</a>
+                    </t>
                     <t t-name="card">
                         <field name="name" class="fw-bold fs-5"/>
+                        <field name="category_id" class="text-muted"/>
+                        <div t-if="record.intern_ids.raw_value.length" class="mt-1">
+                            <span class="text-muted">Інтерни:</span>
+                            <field name="intern_ids" widget="many2many_tags"/>
+                        </div>
                         <footer>
                             <!-- Обрано кнопку type="object": метод action_quick_create_visit повертає act_window
                                  з target='new', а лікар, назва й дата підставляються у нову форму через ключі
@@ -94,6 +108,10 @@
                 <filter string="Інтерни"
                         name="filter_intern"
                         domain="[('is_intern', '=', 1)]"/>
+                <separator/>
+                <filter string="Архівовані"
+                        name="filter_archived"
+                        domain="[('active', '=', False)]"/>
             </search>
         </field>
     </record>
