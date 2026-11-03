@@ -19,18 +19,18 @@ class HrHospitalMedicInfo(models.AbstractModel):
             ('ab_negative', 'AB(IV)-'),
         ],
         required=True,
-        string='Група крові',
+        string='Blood Type',
     )
     gender = fields.Selection(
         selection=[
-            ('male', 'Чоловік'),
-            ('female', 'Жінка'),
+            ('male', 'Male'),
+            ('female', 'Female'),
         ],
         required=True,
-        string='Стать',
+        string='Gender',
     )
-    birth_date = fields.Date(string='Дата народження', required=True)
-    age = fields.Integer(string='Вік', compute='_compute_age')
+    birth_date = fields.Date(string='Birth Date', required=True)
+    age = fields.Integer(string='Age', compute='_compute_age')
 
     @api.depends('birth_date')
     def _compute_age(self):

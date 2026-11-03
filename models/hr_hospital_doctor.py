@@ -10,26 +10,26 @@ class HrHospitalDoctor(models.Model):
     name = fields.Char(required=True)
     active = fields.Boolean(default=True)
     doctor_id = fields.Many2one(
-        string='Ментор',
+        string='Mentor',
         comodel_name='hr.hospital.doctor',
         domain=[('is_intern', '=', False)],
         compute='_compute_doctor_id',
         store=True,
         readonly=False,
     )
-    mentor_name = fields.Char(related='doctor_id.name', string='ПІБ ментора')
-    mentor_category_id = fields.Many2one(related='doctor_id.category_id', string='Категорія ментора')
-    mentor_gender = fields.Selection(related='doctor_id.gender', string='Стать ментора')
-    mentor_age = fields.Integer(related='doctor_id.age', string='Вік ментора')
-    category_id = fields.Many2one(string='Категорія', comodel_name='hr.hospital.doctor.category')
+    mentor_name = fields.Char(related='doctor_id.name', string='Mentor Name')
+    mentor_category_id = fields.Many2one(related='doctor_id.category_id', string='Mentor Category')
+    mentor_gender = fields.Selection(related='doctor_id.gender', string='Mentor Gender')
+    mentor_age = fields.Integer(related='doctor_id.age', string='Mentor Age')
+    category_id = fields.Many2one(string='Category', comodel_name='hr.hospital.doctor.category')
     history_ids = fields.One2many(comodel_name='hr.hospital.doctor.history', inverse_name='doctor_id')
-    user_id = fields.Many2one(comodel_name='res.users', string='Користувач системи')
+    user_id = fields.Many2one(comodel_name='res.users', string='System User')
     is_intern = fields.Boolean(
-        string='Інтерн',
+        string='Intern',
         compute='_compute_is_intern',
         store=True,
     )
-    intern_ids = fields.One2many(comodel_name='hr.hospital.doctor', inverse_name='doctor_id', string='Інтерни')
+    intern_ids = fields.One2many(comodel_name='hr.hospital.doctor', inverse_name='doctor_id', string='Interns')
     patient_ids = fields.One2many(comodel_name="hr.hospital.patient", inverse_name="doctor_id")
     visit_ids = fields.One2many(comodel_name="hr.hospital.visit", inverse_name="doctor_id")
 
@@ -57,20 +57,20 @@ class HrHospitalDoctor(models.Model):
     @api.constrains('doctor_id')
     def _check_is_intern(self):
         if any(record.doctor_id.is_intern for record in self):
-            raise ValidationError('Не можна зберегти запис, якщо обраний ментор є інтерном')
+            raise ValidationError(self.env._('The record cannot be saved because the selected mentor is an intern.'))
 
     def action_quick_create_visit(self):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': f'Запис до лікаря: {self.name}',
+            'name': self.env._('Appointment with doctor: %s', self.name),
             'res_model': 'hr.hospital.visit',
             'view_mode': 'form',
             'views': [(self.env.ref('hr_hospital.hr_hospital_visit_form').id, 'form')],
             'target': 'new',
             'context': {
                 'default_doctor_id': self.id,
-                'default_name': f'Візит до {self.name}',
+                'default_name': self.env._('Visit to %s', self.name),
                 'default_scheduled_datetime': fields.Datetime.to_string(fields.Datetime.now()),
             },
         }

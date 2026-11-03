@@ -7,11 +7,11 @@ class HrHospitalMassReassignDoctorWizard(models.TransientModel):
 
     patient_ids = fields.Many2many(
         comodel_name='hr.hospital.patient',
-        string='Пацієнти',
+        string='Patients',
         default=lambda self: self._default_patient_ids(),
     )
-    doctor_id = fields.Many2one(comodel_name='hr.hospital.doctor', string='Новий Лікар', required=True)
-    changing_date = fields.Date(default=fields.Date.today, string='Дата зміни')
+    doctor_id = fields.Many2one(comodel_name='hr.hospital.doctor', string='New Doctor', required=True)
+    changing_date = fields.Date(default=fields.Date.today, string='Change Date')
 
     @api.model
     def _default_patient_ids(self):

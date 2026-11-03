@@ -10,43 +10,43 @@
     </record>
 
     <record id="hr_hospital_patient_group" model="res.groups">
-        <field name="name">Пацієнт</field>
+        <field name="name">Patient</field>
         <field name="sequence">10</field>
         <field name="privilege_id" ref="hr_hospital_privilege"/>
         <field name="implied_ids" eval="[
             Command.link(ref('base.group_user')),
         ]"/>
-        <field name="comment">Бачить лише власні візити</field>
+        <field name="comment">Sees only own visits</field>
     </record>
     <record id="hr_hospital_intern_group" model="res.groups">
-        <field name="name">Інтерн</field>
+        <field name="name">Intern</field>
         <field name="sequence">20</field>
         <field name="privilege_id" ref="hr_hospital_privilege"/>
         <field name="implied_ids" eval="[
             Command.link(ref('hr_hospital_patient_group')),
         ]"/>
-        <field name="comment">Бачить і редагує власні візити</field>
+        <field name="comment">Sees and edits own visits</field>
     </record>
     <record id="hr_hospital_doctor_group" model="res.groups">
-        <field name="name">Лікар</field>
+        <field name="name">Doctor</field>
         <field name="sequence">30</field>
         <field name="privilege_id" ref="hr_hospital_privilege"/>
         <field name="implied_ids" eval="[
             Command.link(ref('hr_hospital_intern_group')),
         ]"/>
-        <field name="comment">Бачить і редагує власні візити та візити своїх інтернів</field>
+        <field name="comment">Sees and edits own visits and visits of own interns</field>
     </record>
     <record id="hr_hospital_manager_group" model="res.groups">
-        <field name="name">Менеджер</field>
+        <field name="name">Manager</field>
         <field name="sequence">40</field>
         <field name="privilege_id" ref="hr_hospital_privilege"/>
         <field name="implied_ids" eval="[
             Command.link(ref('hr_hospital_doctor_group')),
         ]"/>
-        <field name="comment">Бачить усі візити, керує довідниками, видаляти не може</field>
+        <field name="comment">Sees all visits, manages reference data, cannot delete</field>
     </record>
     <record id="hr_hospital_administrator_group" model="res.groups">
-        <field name="name">Адміністратор</field>
+        <field name="name">Administrator</field>
         <field name="sequence">50</field>
         <field name="privilege_id" ref="hr_hospital_privilege"/>
         <field name="implied_ids" eval="[
@@ -55,13 +55,13 @@
         <field name="user_ids" eval="[
             Command.link(ref('base.user_admin')),
         ]"/>
-        <field name="comment">Повний доступ, включно з видаленням будь-яких даних модуля</field>
+        <field name="comment">Full access, including deletion of any module data</field>
     </record>
 
     <!-- Візити. Правила груп одного користувача об'єднуються через OR, тому кожна вища група лише розширює
          видимість нижчої; perm_* обмежують, для яких операцій правило взагалі застосовується. -->
     <record id="hr_hospital_visit_patient_rule" model="ir.rule">
-        <field name="name">Візити: пацієнт бачить свої</field>
+        <field name="name">Visits: patient sees own</field>
         <field name="model_id" ref="model_hr_hospital_visit"/>
         <field name="domain_force">[('patient_id.user_id', '=', user.id)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_patient_group'))]"/>
@@ -71,7 +71,7 @@
         <field name="perm_unlink" eval="False"/>
     </record>
     <record id="hr_hospital_visit_intern_rule" model="ir.rule">
-        <field name="name">Візити: інтерн бачить і редагує свої</field>
+        <field name="name">Visits: intern sees and edits own</field>
         <field name="model_id" ref="model_hr_hospital_visit"/>
         <field name="domain_force">[('doctor_id.user_id', '=', user.id)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_intern_group'))]"/>
@@ -81,7 +81,7 @@
         <field name="perm_unlink" eval="False"/>
     </record>
     <record id="hr_hospital_visit_doctor_rule" model="ir.rule">
-        <field name="name">Візити: лікар бачить і редагує свої та своїх інтернів</field>
+        <field name="name">Visits: doctor sees and edits own and interns</field>
         <field name="model_id" ref="model_hr_hospital_visit"/>
         <field name="domain_force">[
             '|',
@@ -95,7 +95,7 @@
         <field name="perm_unlink" eval="False"/>
     </record>
     <record id="hr_hospital_visit_manager_rule" model="ir.rule">
-        <field name="name">Візити: менеджер бачить усі та записує на візит</field>
+        <field name="name">Visits: manager sees all and books visits</field>
         <field name="model_id" ref="model_hr_hospital_visit"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_manager_group'))]"/>
@@ -105,7 +105,7 @@
         <field name="perm_unlink" eval="False"/>
     </record>
     <record id="hr_hospital_visit_administrator_rule" model="ir.rule">
-        <field name="name">Візити: адміністратор має повний доступ</field>
+        <field name="name">Visits: administrator has full access</field>
         <field name="model_id" ref="model_hr_hospital_visit"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_administrator_group'))]"/>
@@ -113,7 +113,7 @@
 
     <!-- Картки пацієнтів та історія призначень: пацієнт бачить лише себе, персонал — усіх. -->
     <record id="hr_hospital_patient_patient_rule" model="ir.rule">
-        <field name="name">Пацієнти: пацієнт бачить свою картку</field>
+        <field name="name">Patients: patient sees own card</field>
         <field name="model_id" ref="model_hr_hospital_patient"/>
         <field name="domain_force">[('user_id', '=', user.id)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_patient_group'))]"/>
@@ -122,13 +122,13 @@
         <field name="perm_unlink" eval="False"/>
     </record>
     <record id="hr_hospital_patient_intern_rule" model="ir.rule">
-        <field name="name">Пацієнти: персонал бачить усіх</field>
+        <field name="name">Patients: staff sees all</field>
         <field name="model_id" ref="model_hr_hospital_patient"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_intern_group'))]"/>
     </record>
     <record id="hr_hospital_doctor_history_patient_rule" model="ir.rule">
-        <field name="name">Історія: пацієнт бачить свою</field>
+        <field name="name">History: patient sees own</field>
         <field name="model_id" ref="model_hr_hospital_doctor_history"/>
         <field name="domain_force">[('patient_id.user_id', '=', user.id)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_patient_group'))]"/>
@@ -137,7 +137,7 @@
         <field name="perm_unlink" eval="False"/>
     </record>
     <record id="hr_hospital_doctor_history_intern_rule" model="ir.rule">
-        <field name="name">Історія: персонал бачить усю</field>
+        <field name="name">History: staff sees all</field>
         <field name="model_id" ref="model_hr_hospital_doctor_history"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[Command.link(ref('hr_hospital_intern_group'))]"/>

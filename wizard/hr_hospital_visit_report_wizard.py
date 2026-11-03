@@ -10,18 +10,18 @@ class HrHospitalVisitReportWizard(models.TransientModel):
 
     doctor_ids = fields.Many2many(
         comodel_name='hr.hospital.doctor',
-        string='Лікарі',
+        string='Doctors',
         default=lambda self: self._default_active_ids('hr.hospital.doctor'),
     )
     patient_ids = fields.Many2many(
         comodel_name='hr.hospital.patient',
-        string='Пацієнти',
+        string='Patients',
         default=lambda self: self._default_active_ids('hr.hospital.patient'),
     )
-    date_from = fields.Date(string='Початок періоду')
-    date_to = fields.Date(string='Кінець періоду')
-    only_completed = fields.Boolean(string='Лише завершені візити')
-    disease_id = fields.Many2one(comodel_name='hr.hospital.disease', string='Хвороба')
+    date_from = fields.Date(string='Period Start')
+    date_to = fields.Date(string='Period End')
+    only_completed = fields.Boolean(string='Completed Visits Only')
+    disease_id = fields.Many2one(comodel_name='hr.hospital.disease', string='Disease')
 
     @api.model
     def _default_active_ids(self, model_name):
@@ -62,10 +62,10 @@ class HrHospitalVisitReportWizard(models.TransientModel):
     def action_show_report(self):
         self.ensure_one()
         if self.date_from and self.date_to and self.date_from > self.date_to:
-            raise UserError('Початок періоду не може бути пізніше за кінець періоду.')
+            raise UserError(self.env._('The period start cannot be later than the period end.'))
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Звіт по візитах',
+            'name': self.env._('Visit Report'),
             'res_model': 'hr.hospital.visit',
             'view_mode': 'list,form',
             'domain': self._get_visit_domain(),

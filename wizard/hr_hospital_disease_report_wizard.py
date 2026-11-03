@@ -7,18 +7,18 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
 
     doctor_ids = fields.Many2many(
         comodel_name='hr.hospital.doctor',
-        string='Лікарі',
+        string='Doctors',
         default=lambda self: self._default_active_ids('hr.hospital.doctor'),
     )
 
     disease_ids = fields.Many2many(
         comodel_name='hr.hospital.disease',
-        string='Хвороби',
+        string='Diseases',
         default=lambda self: self._default_active_ids('hr.hospital.disease'),
     )
 
-    date_from = fields.Datetime(string='з')
-    date_to = fields.Datetime(string='по')
+    date_from = fields.Datetime(string='From')
+    date_to = fields.Datetime(string='To')
 
     @api.model
     def _default_active_ids(self, model_name):
@@ -44,7 +44,7 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
     def action_show_report(self):
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Звіт по хворобам',
+            'name': self.env._('Disease Report'),
             'res_model': 'hr.hospital.visit',
             'view_mode': 'list,form',
             'domain': self._get_visit_domain(),

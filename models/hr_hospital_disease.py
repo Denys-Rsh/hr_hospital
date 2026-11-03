@@ -8,7 +8,7 @@ class HrHospitalDisease(models.Model):
     _parent_name = 'parent_id'
     _parent_store = True
 
-    name = fields.Char(string='Назва', required=True)
+    name = fields.Char(string='Name', required=True, translate=True)
     display_name = fields.Char(recursive=True)
     parent_path = fields.Char(index=True)
     parent_id = fields.Many2one(
@@ -26,7 +26,7 @@ class HrHospitalDisease(models.Model):
     @api.constrains('parent_id')
     def _check_parent_id(self):
         if self._has_cycle():
-            raise ValidationError('You cannot create recursive categories!')
+            raise ValidationError(self.env._('You cannot create recursive categories!'))
 
     @api.depends('name', 'parent_id.display_name')
     @api.depends_context('hierarchical_naming')

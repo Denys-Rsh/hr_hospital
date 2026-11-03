@@ -26,7 +26,7 @@
                     <button name="action_create_visit"
                             type="object"
                             groups="hr_hospital.hr_hospital_manager_group"
-                            string="Створити візит"
+                            string="Create Visit"
                             class="oe_highlight"
                     />
                 </header>
@@ -75,11 +75,11 @@
         <field name="arch" type="xml">
             <search string="Patients">
                 <field name="name"
-                       string="ПІБ або телефон"
+                       string="Name or Phone"
                        filter_domain="['|', ('name', 'ilike', self), ('phone', 'ilike', self)]"
                 />
-                <field name="name" string="ПІБ" />
-                <field name="phone" string="Телефон" />
+                <field name="name" string="Full Name" />
+                <field name="phone" string="Phone" />
                 <field name="doctor_id" />
             </search>
         </field>

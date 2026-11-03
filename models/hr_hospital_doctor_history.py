@@ -18,8 +18,8 @@ class HrHospitalDoctorHistory(models.Model):
         if self.doctor_shift_date and self.appointment_date and self.doctor_shift_date < self.appointment_date:
             return {
                 'warning': {
-                    'title': 'Невірна дата',
-                    'message': 'Дата зміни лікаря не може бути раніше ніж дата призначення',
+                    'title': self.env._('Invalid date'),
+                    'message': self.env._('The doctor change date cannot be earlier than the appointment date.'),
                 },
             }
         return None
@@ -32,7 +32,7 @@ class HrHospitalDoctorHistory(models.Model):
                 and record.appointment_date
                 and record.doctor_shift_date < record.appointment_date
             ):
-                raise ValidationError('Дата зміни лікаря не може бути раніше ніж дата призначення')
+                raise ValidationError(self.env._('The doctor change date cannot be earlier than the appointment date.'))
 
     @api.depends('patient_id', 'doctor_id', 'doctor_id.category_id.name', 'appointment_date')
     def _compute_display_name(self):
