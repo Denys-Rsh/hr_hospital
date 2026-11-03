@@ -21,6 +21,7 @@ class HrHospitalPatient(models.Model):
         string='Візити',
     )
     visit_count = fields.Integer(string='Кількість візитів', compute='_compute_visit_count')
+    user_id = fields.Many2one(comodel_name='res.users', string='Користувач системи')
 
     @api.depends('visit_ids')
     def _compute_visit_count(self):

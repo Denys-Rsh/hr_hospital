@@ -25,6 +25,7 @@
                 <header>
                     <button name="action_create_visit"
                             type="object"
+                            groups="hr_hospital.hr_hospital_manager_group"
                             string="Створити візит"
                             class="oe_highlight"
                     />
@@ -52,6 +53,7 @@
                             <field name="age" />
                             <field name="blood_type" />
                             <field name="doctor_id" />
+                            <field name="user_id" />
                         </group>
                     </group>
                     <notebook>

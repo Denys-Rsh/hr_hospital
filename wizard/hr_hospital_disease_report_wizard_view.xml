@@ -27,6 +27,7 @@
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_hr_hospital_doctor" />
         <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[Command.link(ref('hr_hospital_doctor_group'))]" />
     </record>
 
     <record id="hr_hospital_disease_report_wizard_disease_action" model="ir.actions.act_window">
@@ -36,5 +37,6 @@
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_hr_hospital_disease" />
         <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[Command.link(ref('hr_hospital_doctor_group'))]" />
     </record>
 </odoo>

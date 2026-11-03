@@ -7,6 +7,7 @@
     "depends": ["base", "mail"],
 
     "data": [
+        "security/hr_hospital_security.xml",
         "security/ir.model.access.csv",
         "views/hr_hospital_menu.xml",
         "views/hr_hospital_doctor_views.xml",
@@ -26,6 +27,7 @@
     ],
 
     "demo": [
+        "demo/hr_hospital_user_demo.xml",
         "demo/hr_hospital_doctor_demo.xml",
         "demo/hr_hospital_patient_demo.xml",
         "demo/hr_hospital_disease_demo.xml",

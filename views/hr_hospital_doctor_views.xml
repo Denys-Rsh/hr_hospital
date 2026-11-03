@@ -65,7 +65,7 @@
                 <templates>
                     <t t-name="menu">
                         <a role="menuitem" type="open" class="dropdown-item">Відкрити</a>
-                        <a role="menuitem" type="object" name="action_quick_create_visit" class="dropdown-item">Записати на візит</a>
+                        <a role="menuitem" type="object" name="action_quick_create_visit" class="dropdown-item" groups="hr_hospital.hr_hospital_manager_group">Записати на візит</a>
                         <a t-if="record.active.raw_value" role="menuitem" type="archive" class="dropdown-item">Архівувати</a>
                         <a t-if="!record.active.raw_value" role="menuitem" type="unarchive" class="dropdown-item">Розархівувати</a>
                         <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Видалити</a>
@@ -87,6 +87,7 @@
                                  працює лише в kanban візитів і заповнює тільки поле групування та name. -->
                             <button name="action_quick_create_visit"
                                     type="object"
+                                    groups="hr_hospital.hr_hospital_manager_group"
                                     string="Записати на візит"
                                     icon="fa-calendar-plus-o"
                                     class="btn btn-sm btn-primary"/>

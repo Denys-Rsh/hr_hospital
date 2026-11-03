@@ -23,7 +23,7 @@ class HrHospitalDoctor(models.Model):
     mentor_age = fields.Integer(related='doctor_id.age', string='Вік ментора')
     category_id = fields.Many2one(string='Категорія', comodel_name='hr.hospital.doctor.category')
     history_ids = fields.One2many(comodel_name='hr.hospital.doctor.history', inverse_name='doctor_id')
-    user_id = fields.Many2one(comodel_name='res.users')
+    user_id = fields.Many2one(comodel_name='res.users', string='Користувач системи')
     is_intern = fields.Boolean(
         string='Інтерн',
         compute='_compute_is_intern',

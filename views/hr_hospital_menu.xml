@@ -1,6 +1,7 @@
 <odoo>
     <menuitem id="hr_hospital_main_menu"
-              name="Hr hospital" />
+              name="Hr hospital"
+              groups="hr_hospital_patient_group" />
 
     <menuitem id="hr_hospital_patient_menu"
               parent="hr_hospital_main_menu"
