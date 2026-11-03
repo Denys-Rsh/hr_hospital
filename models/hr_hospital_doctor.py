@@ -3,6 +3,8 @@ from odoo.exceptions import ValidationError
 
 
 class HrHospitalDoctor(models.Model):
+    """Doctor or intern of the hospital."""
+
     _name = 'hr.hospital.doctor'
     _description = 'Hospital doctor'
     _inherit = 'hr.hospital.medic.info'
@@ -50,16 +52,19 @@ class HrHospitalDoctor(models.Model):
 
     @api.depends('is_intern')
     def _compute_doctor_id(self):
+        """Clear the mentor when the doctor is not an intern."""
         for record in self:
             if not record.is_intern:
                 record.doctor_id = False
 
     @api.constrains('doctor_id')
     def _check_is_intern(self):
+        """Forbid choosing an intern as a mentor."""
         if any(record.doctor_id.is_intern for record in self):
             raise ValidationError(self.env._('The record cannot be saved because the selected mentor is an intern.'))
 
     def action_quick_create_visit(self):
+        """Open a popup form of a new visit for this doctor."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',

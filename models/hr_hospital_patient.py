@@ -2,6 +2,8 @@ from odoo import api, fields, models
 
 
 class HrHospitalPatient(models.Model):
+    """Patient of the hospital."""
+
     _name = 'hr.hospital.patient'
     _description = 'Hospital patient'
     _inherit = 'hr.hospital.medic.info'
@@ -25,6 +27,7 @@ class HrHospitalPatient(models.Model):
 
     @api.depends('visit_ids')
     def _compute_visit_count(self):
+        """Count the visits of each patient with a single grouped query."""
         counts = {}
         if self.ids:
             groups = self.env['hr.hospital.visit']._read_group(
@@ -37,6 +40,7 @@ class HrHospitalPatient(models.Model):
             record.visit_count = counts.get(record.id, 0)
 
     def action_view_visits(self):
+        """Open the list of visits of this patient."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
@@ -48,6 +52,7 @@ class HrHospitalPatient(models.Model):
         }
 
     def action_create_visit(self):
+        """Open a popup form of a new visit for this patient and the personal doctor."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',

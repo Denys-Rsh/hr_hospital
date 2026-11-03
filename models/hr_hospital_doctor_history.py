@@ -3,6 +3,8 @@ from odoo.exceptions import ValidationError
 
 
 class HrHospitalDoctorHistory(models.Model):
+    """History of personal doctor changes of a patient."""
+
     _name = 'hr.hospital.doctor.history'
     _description = 'Hospital doctor history'
 
@@ -15,6 +17,7 @@ class HrHospitalDoctorHistory(models.Model):
 
     @api.onchange('appointment_date', 'doctor_shift_date')
     def _onchange_doctor_shift_date(self):
+        """Warn when the doctor change date is earlier than the appointment date."""
         if self.doctor_shift_date and self.appointment_date and self.doctor_shift_date < self.appointment_date:
             return {
                 'warning': {
@@ -26,6 +29,7 @@ class HrHospitalDoctorHistory(models.Model):
 
     @api.constrains('appointment_date', 'doctor_shift_date')
     def _check_doctor_shift_date(self):
+        """Forbid a doctor change date earlier than the appointment date."""
         for record in self:
             if (
                 record.doctor_shift_date
@@ -36,6 +40,7 @@ class HrHospitalDoctorHistory(models.Model):
 
     @api.depends('patient_id', 'doctor_id', 'doctor_id.category_id.name', 'appointment_date')
     def _compute_display_name(self):
+        """Build the name as "<patient> - <doctor> (<category>) <appointment date>"."""
         for record in self:
             category = record.doctor_id.category_id.name
             record.display_name = '%s - %s%s %s' % (

@@ -4,6 +4,8 @@ from odoo import api, fields, models
 
 
 class HrHospitalMedicInfo(models.AbstractModel):
+    """Abstract model with medical data shared by doctors and patients."""
+
     _name = 'hr.hospital.medic.info'
     _description = 'Hospital Medic Info'
 
@@ -34,5 +36,6 @@ class HrHospitalMedicInfo(models.AbstractModel):
 
     @api.depends('birth_date')
     def _compute_age(self):
+        """Compute the full age in years from the birth date."""
         for record in self:
             record.age = relativedelta(fields.Date.today(), record.birth_date).years if record.birth_date else 0

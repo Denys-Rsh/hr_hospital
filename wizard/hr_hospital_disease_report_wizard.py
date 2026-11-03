@@ -2,6 +2,8 @@ from odoo import api, fields, models
 
 
 class HrHospitalDiseaseReportWizard(models.TransientModel):
+    """Wizard that shows visits filtered by doctors, diseases and period."""
+
     _name = 'hr.hospital.disease.report.wizard'
     _description = 'Hospital disease report wizard'
 
@@ -22,11 +24,13 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
 
     @api.model
     def _default_active_ids(self, model_name):
+        """Take the records selected in the list of model_name as the default value."""
         if self.env.context.get('active_model') == model_name:
             return [fields.Command.set(self.env.context.get('active_ids', []))]
         return False
 
     def _get_visit_domain(self):
+        """Build the visit domain from the wizard filters."""
         self.ensure_one()
         domain = []
         if self.doctor_ids:
@@ -42,6 +46,7 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
     discount = fields.Integer(string='Value')
 
     def action_show_report(self):
+        """Open the filtered list of visits."""
         return {
             'type': 'ir.actions.act_window',
             'name': self.env._('Disease Report'),

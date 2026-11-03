@@ -5,6 +5,8 @@ from odoo.exceptions import UserError
 
 
 class HrHospitalVisitReportWizard(models.TransientModel):
+    """Wizard that shows visits filtered by doctors, patients, period and disease."""
+
     _name = 'hr.hospital.visit.report.wizard'
     _description = 'Hospital visit report wizard'
 
@@ -25,11 +27,13 @@ class HrHospitalVisitReportWizard(models.TransientModel):
 
     @api.model
     def _default_active_ids(self, model_name):
+        """Take the records selected in the list of model_name as the default value."""
         if self.env.context.get('active_model') == model_name:
             return [fields.Command.set(self.env.context.get('active_ids', []))]
         return False
 
     def _get_visit_domain(self):
+        """Build the visit domain from the wizard filters; the period uses the actual visit time and falls back to the scheduled time."""
         self.ensure_one()
         domain = []
         if self.doctor_ids:
@@ -60,6 +64,7 @@ class HrHospitalVisitReportWizard(models.TransientModel):
         return domain
 
     def action_show_report(self):
+        """Validate the period and open the filtered list of visits."""
         self.ensure_one()
         if self.date_from and self.date_to and self.date_from > self.date_to:
             raise UserError(self.env._('The period start cannot be later than the period end.'))

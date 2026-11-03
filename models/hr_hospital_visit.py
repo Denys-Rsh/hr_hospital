@@ -3,6 +3,8 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class HrHospitalVisit(models.Model):
+    """Visit of a patient to a doctor."""
+
     _name = 'hr.hospital.visit'
     _description = 'Hospital visit'
     _inherit = ['mail.thread']
@@ -32,6 +34,7 @@ class HrHospitalVisit(models.Model):
 
     @api.depends('disease_id')
     def _compute_same_disease_visit_count(self):
+        """Count the visits with the same disease with a single grouped query."""
         disease_ids = self.disease_id.ids
         counts = {}
         if disease_ids:
@@ -45,6 +48,7 @@ class HrHospitalVisit(models.Model):
             record.same_disease_visit_count = counts.get(record.disease_id.id, 0)
 
     def action_view_same_disease_visits(self):
+        """Open the list of visits with the same disease."""
         self.ensure_one()
         if not self.disease_id:
             raise UserError(self.env._('No disease is set for this visit.'))
@@ -58,22 +62,26 @@ class HrHospitalVisit(models.Model):
         }
 
     def _get_overdue_visits_domain(self):
+        """Return the domain of scheduled visits whose time has already passed."""
         return [
             ('status', '=', 'scheduled'),
             ('scheduled_datetime', '<', fields.Datetime.now()),
         ]
 
     def action_cancel_overdue_visits(self):
+        """Cancel the overdue visits among the records and return them."""
         overdue = self.filtered_domain(self._get_overdue_visits_domain())
         overdue.write({'status': 'cancelled'})
         return overdue
 
     @api.model
     def _cron_cancel_overdue_visits(self):
+        """Cancel all overdue visits; called by the scheduled action."""
         return self.search(self._get_overdue_visits_domain()).action_cancel_overdue_visits()
 
     @api.onchange('visit_datetime', 'scheduled_datetime', 'doctor_id', 'active')
     def _onchange_fields(self):
+        """Warn when the time, date or doctor of a completed visit is changed."""
         if self.status == 'completed':
             return {
                 'warning': {
@@ -85,6 +93,7 @@ class HrHospitalVisit(models.Model):
 
     @api.constrains('visit_datetime', 'scheduled_datetime', 'doctor_id', 'active')
     def _check_fields(self):
+        """Forbid changing the time, date or doctor of a completed visit."""
         for record in self:
             if record.status == 'completed':
                 raise ValidationError(
@@ -93,5 +102,6 @@ class HrHospitalVisit(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_visited(self):
+        """Forbid deleting completed visits."""
         if any(record.status == 'completed' for record in self):
             raise UserError(self.env._('It is not allowed to delete a completed visit.'))
