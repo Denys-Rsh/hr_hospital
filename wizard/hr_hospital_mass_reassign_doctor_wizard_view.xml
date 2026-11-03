@@ -10,19 +10,20 @@
                     <field name="changing_date" />
                 </group>
                 <footer>
-                    <button name="action_reassign" type="object" string="Призначити" class="btn-primary" />
-                    <button special="cancel" string="Скасувати" />
+                    <button name="action_reassign" type="object" string="Reassign" class="btn-primary" />
+                    <button special="cancel" string="Cancel" />
                 </footer>
             </form>
         </field>
     </record>
 
     <record id="hr_hospital_mass_reassign_doctor_wizard_action" model="ir.actions.act_window">
-        <field name="name">Візард масового перевизначення персонального лікаря для пацієнтів</field>
+        <field name="name">Mass Reassign Personal Doctor</field>
         <field name="res_model">hr.hospital.mass.reassign.doctor.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_hr_hospital_patient" />
         <field name="binding_view_types">list</field>
+        <field name="group_ids" eval="[Command.link(ref('hr_hospital_manager_group'))]" />
     </record>
 </odoo>

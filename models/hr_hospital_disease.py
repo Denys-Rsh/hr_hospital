@@ -3,12 +3,14 @@ from odoo.exceptions import ValidationError
 
 
 class HrHospitalDisease(models.Model):
+    """Disease, organised as a tree of categories."""
+
     _name = 'hr.hospital.disease'
     _description = 'Hospital disease'
     _parent_name = 'parent_id'
     _parent_store = True
 
-    name = fields.Char(string='Назва', required=True)
+    name = fields.Char(string='Name', required=True, translate=True)
     display_name = fields.Char(recursive=True)
     parent_path = fields.Char(index=True)
     parent_id = fields.Many2one(
@@ -25,12 +27,14 @@ class HrHospitalDisease(models.Model):
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
+        """Forbid recursive disease hierarchy."""
         if self._has_cycle():
-            raise ValidationError('You cannot create recursive categories!')
+            raise ValidationError(self.env._('You cannot create recursive categories!'))
 
     @api.depends('name', 'parent_id.display_name')
     @api.depends_context('hierarchical_naming')
     def _compute_display_name(self):
+        """Show the full path "Parent / Child" unless the hierarchical_naming context key is False."""
         hierarchical = self.env.context.get('hierarchical_naming', True)
         for record in self:
             if hierarchical and record.parent_id:

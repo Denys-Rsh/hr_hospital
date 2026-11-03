@@ -40,7 +40,7 @@
                             <field name="intern_ids" />
                             <field name="patient_ids" />
                         </group>
-                        <group string="Ментор" invisible="not doctor_id">
+                        <group string="Mentor" invisible="not doctor_id">
                             <field name="mentor_name" />
                             <field name="mentor_category_id" />
                             <field name="mentor_gender" />
@@ -64,17 +64,17 @@
                 <field name="active"/>
                 <templates>
                     <t t-name="menu">
-                        <a role="menuitem" type="open" class="dropdown-item">Відкрити</a>
-                        <a role="menuitem" type="object" name="action_quick_create_visit" class="dropdown-item">Записати на візит</a>
-                        <a t-if="record.active.raw_value" role="menuitem" type="archive" class="dropdown-item">Архівувати</a>
-                        <a t-if="!record.active.raw_value" role="menuitem" type="unarchive" class="dropdown-item">Розархівувати</a>
-                        <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Видалити</a>
+                        <a role="menuitem" type="open" class="dropdown-item">Open</a>
+                        <a role="menuitem" type="object" name="action_quick_create_visit" class="dropdown-item" groups="hr_hospital.hr_hospital_manager_group">Book a Visit</a>
+                        <a t-if="record.active.raw_value" role="menuitem" type="archive" class="dropdown-item">Archive</a>
+                        <a t-if="!record.active.raw_value" role="menuitem" type="unarchive" class="dropdown-item">Unarchive</a>
+                        <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
                     </t>
                     <t t-name="card">
                         <field name="name" class="fw-bold fs-5"/>
                         <field name="category_id" class="text-muted"/>
                         <div t-if="record.intern_ids.raw_value.length" class="mt-1">
-                            <span class="text-muted">Інтерни:</span>
+                            <span class="text-muted">Interns:</span>
                             <field name="intern_ids" widget="many2many_tags"/>
                         </div>
                         <footer>
@@ -87,7 +87,8 @@
                                  працює лише в kanban візитів і заповнює тільки поле групування та name. -->
                             <button name="action_quick_create_visit"
                                     type="object"
-                                    string="Записати на візит"
+                                    groups="hr_hospital.hr_hospital_manager_group"
+                                    string="Book a Visit"
                                     icon="fa-calendar-plus-o"
                                     class="btn btn-sm btn-primary"/>
                         </footer>
@@ -102,14 +103,14 @@
         <field name="model">hr.hospital.doctor</field>
         <field name="arch" type="xml">
             <search>
-                <filter string="Ментори"
+                <filter string="Mentors"
                         name="filter_mentor"
                         domain="[('intern_ids', '!=', False)]"/>
-                <filter string="Інтерни"
+                <filter string="Interns"
                         name="filter_intern"
                         domain="[('is_intern', '=', 1)]"/>
                 <separator/>
-                <filter string="Архівовані"
+                <filter string="Archived"
                         name="filter_archived"
                         domain="[('active', '=', False)]"/>
             </search>

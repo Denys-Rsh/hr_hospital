@@ -1,0 +1,38 @@
+<odoo>
+    <record id="hr_hospital_user_patient" model="res.users">
+        <field name="name">Hospital Patient</field>
+        <field name="login">hospital_patient</field>
+        <field name="password">hospital_patient</field>
+        <field name="group_ids" eval="[Command.set([ref('hr_hospital_patient_group')])]"/>
+    </record>
+    <record id="hr_hospital_user_intern" model="res.users">
+        <field name="name">Hospital Intern</field>
+        <field name="login">hospital_intern</field>
+        <field name="password">hospital_intern</field>
+        <field name="group_ids" eval="[Command.set([ref('hr_hospital_intern_group')])]"/>
+    </record>
+    <record id="hr_hospital_user_doctor" model="res.users">
+        <field name="name">Hospital Doctor</field>
+        <field name="login">hospital_doctor</field>
+        <field name="password">hospital_doctor</field>
+        <field name="group_ids" eval="[Command.set([ref('hr_hospital_doctor_group')])]"/>
+    </record>
+    <record id="hr_hospital_user_manager" model="res.users">
+        <field name="name">Hospital Manager</field>
+        <field name="login">hospital_manager</field>
+        <field name="password">hospital_manager</field>
+        <field name="group_ids" eval="[Command.set([ref('hr_hospital_manager_group')])]"/>
+    </record>
+    <record id="hr_hospital_user_administrator" model="res.users">
+        <field name="name">Hospital Administrator</field>
+        <field name="login">hospital_admin</field>
+        <field name="password">hospital_admin</field>
+        <field name="group_ids" eval="[Command.set([ref('hr_hospital_administrator_group')])]"/>
+    </record>
+    <record id="hr_hospital_user_outsider" model="res.users">
+        <field name="name">Hospital Outsider</field>
+        <field name="login">hospital_outsider</field>
+        <field name="password">hospital_outsider</field>
+        <field name="group_ids" eval="[Command.set([ref('base.group_user')])]"/>
+    </record>
+</odoo>

@@ -1,11 +1,11 @@
 <odoo>
     <record id="hr_hospital_doctor_report_action" model="ir.actions.report">
-        <field name="name">Звіт доктора</field>
+        <field name="name">Doctor Report</field>
         <field name="model">hr.hospital.doctor</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">hr_hospital.hr_hospital_doctor_report_template</field>
         <field name="report_file">hr_hospital.hr_hospital_doctor_report_template</field>
-        <field name="print_report_name">'Лікар - %s' % object.name</field>
+        <field name="print_report_name">'Doctor - %s' % object.name</field>
         <field name="binding_model_id" ref="model_hr_hospital_doctor"/>
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="base.paperformat_euro"/>
@@ -45,7 +45,7 @@
                                 — <span t-field="o.category_id.name"/>
                             </t>
                         </h2>
-                        <h2>Історія візитів</h2>
+                        <h2>Visit History</h2>
                         <t
                                 t-set="visits"
                                 t-value="o.visit_ids.sorted(key=lambda v: v.visit_datetime or v.scheduled_datetime or v.create_date, reverse=True)"/>
@@ -64,14 +64,14 @@
                                     t-field="visit.status"/>
                             <br/>
                         </t>
-                        <h2>Пацієнти</h2>
+                        <h2>Patients</h2>
                         <table class="table table-sm table-bordered">
                             <thead>
                                 <tr>
-                                    <th>ПІБ</th>
-                                    <th>Стать</th>
-                                    <th>Дата народження</th>
-                                    <th>Телефон</th>
+                                    <th>Full Name</th>
+                                    <th>Gender</th>
+                                    <th>Birth Date</th>
+                                    <th>Phone</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,14 +87,14 @@
                     <div class="footer">
                         <div class="d-flex justify-content-between border-top pt-1 small">
                             <span>
-                                Надруковано:
+                                Printed:
                                 <t t-out="context_timestamp(datetime.datetime.now()).strftime('%d.%m.%Y %H:%M')"/>
                             </span>
                             <span>
                                 <t t-out="res_company.city"/>
                             </span>
                             <span>
-                                Стор.
+                                Page
                                 <span class="page"/>
                                 /
                                 <span class="topage"/>

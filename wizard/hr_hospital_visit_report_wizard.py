@@ -5,31 +5,35 @@ from odoo.exceptions import UserError
 
 
 class HrHospitalVisitReportWizard(models.TransientModel):
+    """Wizard that shows visits filtered by doctors, patients, period and disease."""
+
     _name = 'hr.hospital.visit.report.wizard'
     _description = 'Hospital visit report wizard'
 
     doctor_ids = fields.Many2many(
         comodel_name='hr.hospital.doctor',
-        string='Лікарі',
+        string='Doctors',
         default=lambda self: self._default_active_ids('hr.hospital.doctor'),
     )
     patient_ids = fields.Many2many(
         comodel_name='hr.hospital.patient',
-        string='Пацієнти',
+        string='Patients',
         default=lambda self: self._default_active_ids('hr.hospital.patient'),
     )
-    date_from = fields.Date(string='Початок періоду')
-    date_to = fields.Date(string='Кінець періоду')
-    only_completed = fields.Boolean(string='Лише завершені візити')
-    disease_id = fields.Many2one(comodel_name='hr.hospital.disease', string='Хвороба')
+    date_from = fields.Date(string='Period Start')
+    date_to = fields.Date(string='Period End')
+    only_completed = fields.Boolean(string='Completed Visits Only')
+    disease_id = fields.Many2one(comodel_name='hr.hospital.disease', string='Disease')
 
     @api.model
     def _default_active_ids(self, model_name):
+        """Take the records selected in the list of model_name as the default value."""
         if self.env.context.get('active_model') == model_name:
             return [fields.Command.set(self.env.context.get('active_ids', []))]
         return False
 
     def _get_visit_domain(self):
+        """Build the visit domain from the wizard filters; the period uses the actual visit time and falls back to the scheduled time."""
         self.ensure_one()
         domain = []
         if self.doctor_ids:
@@ -60,12 +64,13 @@ class HrHospitalVisitReportWizard(models.TransientModel):
         return domain
 
     def action_show_report(self):
+        """Validate the period and open the filtered list of visits."""
         self.ensure_one()
         if self.date_from and self.date_to and self.date_from > self.date_to:
-            raise UserError('Початок періоду не може бути пізніше за кінець періоду.')
+            raise UserError(self.env._('The period start cannot be later than the period end.'))
         return {
             'type': 'ir.actions.act_window',
-            'name': 'Звіт по візитах',
+            'name': self.env._('Visit Report'),
             'res_model': 'hr.hospital.visit',
             'view_mode': 'list,form',
             'domain': self._get_visit_domain(),

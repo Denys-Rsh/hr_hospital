@@ -13,28 +13,30 @@
                     </group>
                 </group>
                 <footer>
-                    <button name="action_show_report" type="object" string="Сформувати" class="btn-primary" />
-                    <button special="cancel" string="Скасувати" />
+                    <button name="action_show_report" type="object" string="Generate" class="btn-primary" />
+                    <button special="cancel" string="Cancel" />
                 </footer>
             </form>
         </field>
     </record>
 
     <record id="hr_hospital_disease_report_wizard_doctor_action" model="ir.actions.act_window">
-        <field name="name">Звіт по хворобах</field>
+        <field name="name">Disease Report</field>
         <field name="res_model">hr.hospital.disease.report.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_hr_hospital_doctor" />
         <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[Command.link(ref('hr_hospital_doctor_group'))]" />
     </record>
 
     <record id="hr_hospital_disease_report_wizard_disease_action" model="ir.actions.act_window">
-        <field name="name">Звіт по хворобах</field>
+        <field name="name">Disease Report</field>
         <field name="res_model">hr.hospital.disease.report.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
         <field name="binding_model_id" ref="model_hr_hospital_disease" />
         <field name="binding_view_types">list,form</field>
+        <field name="group_ids" eval="[Command.link(ref('hr_hospital_doctor_group'))]" />
     </record>
 </odoo>

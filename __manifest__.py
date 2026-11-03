@@ -1,12 +1,27 @@
 {
     "name": "Hr hospital",
+    "summary": "Doctors, patients, visits and diseases of a hospital",
+    "description": """
+Hospital management
+===================
+Manages doctors and interns, patients, visits, a hierarchical disease
+catalogue and the history of personal doctor changes. Includes wizards
+for reports and mass reassignment of the personal doctor, a scheduled
+action that cancels overdue visits and five user groups with record rules.
+""",
     "author": "Denys Rsh",
-    "version": "19.0.2.0.0",
+    "maintainer": "Denys Rsh",
+    "category": "Human Resources",
+    "version": "19.0.3.0.0",
     "license": "OPL-1",
+    "images": ["static/description/banner.png"],
+    "application": True,
+    "installable": True,
 
     "depends": ["base", "mail"],
 
     "data": [
+        "security/hr_hospital_security.xml",
         "security/ir.model.access.csv",
         "views/hr_hospital_menu.xml",
         "views/hr_hospital_doctor_views.xml",
@@ -26,6 +41,7 @@
     ],
 
     "demo": [
+        "demo/hr_hospital_user_demo.xml",
         "demo/hr_hospital_doctor_demo.xml",
         "demo/hr_hospital_patient_demo.xml",
         "demo/hr_hospital_disease_demo.xml",

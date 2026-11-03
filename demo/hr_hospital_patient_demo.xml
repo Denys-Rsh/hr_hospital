@@ -5,6 +5,7 @@
         <field name="blood_type">o_positive</field>
         <field name="gender">female</field>
         <field name="birth_date">1995-06-18</field>
+        <field name="user_id" ref="hr_hospital_user_patient"/>
     </record>
     <record id="hr_hospital_patient_2" model="hr.hospital.patient">
         <field name="name">Patient demo two</field>
