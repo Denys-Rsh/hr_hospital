@@ -1,3 +1,37 @@
+"""Prepare ``policy_number`` for the Char -> Integer change (19.0.3.2.0).
+
+What it does
+    Cleans ``hr_hospital_patient.policy_number`` so that every remaining
+    value can be cast to PostgreSQL ``int4``:
+
+    * blank strings become ``NULL``;
+    * values that are not digits only, or do not fit in ``int4``
+      (> 2147483647), are copied to the new column ``policy_note`` and
+      ``policy_number`` is set to ``NULL``. Every such row is logged with
+      its id, so nothing disappears silently.
+
+    The column type itself is left as ``varchar``; the ORM converts it when
+    it loads the new ``fields.Integer`` definition.
+
+Why pre-migration
+    The ORM converts the column with
+    ``ALTER TABLE ... ALTER COLUMN policy_number TYPE int4
+    USING policy_number::int4`` while it updates the tables. That happens
+    after pre scripts and before post scripts, so the data must be clean
+    before it, i.e. in a pre script. ``policy_note`` is created here as
+    well (with the same type the ORM would give it) because it has to
+    receive the values before the conversion.
+
+What happens without it
+    The cast fails on the first non-numeric value (``'AB-1234'``):
+    ``invalid input syntax for type integer``. The registry fails to load,
+    odoo-bin exits with code 255 and the whole upgrade is rolled back; the
+    database stays on 19.0.3.1.0 (see doc/UPGRADE_REPORT.md, scenario 3.1).
+
+The script does nothing on a fresh install or when the column is no
+longer ``varchar`` (already converted), so it is safe to run twice.
+"""
+
 import logging
 
 from odoo.tools.sql import column_exists, create_column, table_columns
