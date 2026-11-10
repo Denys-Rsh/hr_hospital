@@ -10,7 +10,11 @@ class HrHospitalPatient(models.Model):
 
     name = fields.Char(required=True)
     phone = fields.Char(string='Phone')
-    insurance_policy_number = fields.Char(string='Insurance Policy Number', size=20)
+    policy_number = fields.Integer(string='Insurance Policy Number')
+    policy_note = fields.Char(
+        string='Policy Note',
+        help='Original policy value that could not be converted to a number.',
+    )
     doctor_id = fields.Many2one(string='Personal Doctor', comodel_name='hr.hospital.doctor')
     history_ids = fields.One2many(
         comodel_name='hr.hospital.doctor.history',
@@ -21,6 +25,10 @@ class HrHospitalPatient(models.Model):
         comodel_name='hr.hospital.visit',
         inverse_name='patient_id',
         string='Visits',
+    )
+    first_visit_date = fields.Date(
+        string='First Visit Date',
+        help='Date of the earliest visit of the patient.',
     )
     visit_count = fields.Integer(string='Visit Count', compute='_compute_visit_count')
     user_id = fields.Many2one(comodel_name='res.users', string='System User')

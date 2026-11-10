@@ -6,13 +6,14 @@
             <list>
                 <field name="name" />
                 <field name="phone" />
-                <field name="insurance_policy_number" />
+                <field name="policy_number" options="{'format': false}" />
                 <field name="gender" />
                 <field name="birth_date" />
                 <field name="age" />
                 <field name="blood_type" />
                 <field name="doctor_id" />
                 <field name="history_ids" />
+                <field name="first_visit_date" optional="show" />
             </list>
         </field>
     </record>
@@ -47,13 +48,15 @@
                         <group>
                             <field name="name" />
                             <field name="phone" widget="phone" />
-                            <field name="insurance_policy_number" />
+                            <field name="policy_number" options="{'format': false}" />
+                            <field name="policy_note" invisible="not policy_note" />
                             <field name="gender" />
                             <field name="birth_date" />
                             <field name="age" />
                             <field name="blood_type" />
                             <field name="doctor_id" />
                             <field name="user_id" />
+                            <field name="first_visit_date" />
                         </group>
                     </group>
                     <notebook>
