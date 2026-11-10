@@ -13,6 +13,7 @@
                 <field name="blood_type" />
                 <field name="doctor_id" />
                 <field name="history_ids" />
+                <field name="first_visit_date" optional="show" />
             </list>
         </field>
     </record>
@@ -55,6 +56,7 @@
                             <field name="blood_type" />
                             <field name="doctor_id" />
                             <field name="user_id" />
+                            <field name="first_visit_date" />
                         </group>
                     </group>
                     <notebook>

@@ -26,6 +26,10 @@ class HrHospitalPatient(models.Model):
         inverse_name='patient_id',
         string='Visits',
     )
+    first_visit_date = fields.Date(
+        string='First Visit Date',
+        help='Date of the earliest visit of the patient.',
+    )
     visit_count = fields.Integer(string='Visit Count', compute='_compute_visit_count')
     user_id = fields.Many2one(comodel_name='res.users', string='System User')
 
