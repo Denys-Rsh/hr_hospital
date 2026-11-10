@@ -7,10 +7,15 @@ What it does
     without visits keep an empty value. It is a single set-based ``UPDATE``,
     so it does not depend on the ORM or on the number of patients.
 
-Why post-migration
-    ``first_visit_date`` is a new stored field: its column is created by the
-    ORM while it updates the tables, which happens after pre scripts. A
-    post script is the first point at which the column exists.
+Why post-, not pre-
+    ``first_visit_date`` is a new stored field, so in a pre script its
+    column does not exist yet: the ORM adds it only in ``init_models()``,
+    after pre scripts, and the ``UPDATE`` fails with ``UndefinedColumn``.
+    A post script is the first point at which the column exists, and all
+    data it reads (``hr_hospital_visit``) belongs to this module and is
+    already in place. An end script would also work, but it is not needed:
+    end scripts wait for every module to be updated, and nothing here
+    depends on other modules.
 
 What happens without it
     The upgrade succeeds, but the field is empty for every existing patient

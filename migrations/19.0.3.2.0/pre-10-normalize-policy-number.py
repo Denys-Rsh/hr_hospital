@@ -13,14 +13,16 @@ What it does
     The column type itself is left as ``varchar``; the ORM converts it when
     it loads the new ``fields.Integer`` definition.
 
-Why pre-migration
-    The ORM converts the column with
-    ``ALTER TABLE ... ALTER COLUMN policy_number TYPE int4
-    USING policy_number::int4`` while it updates the tables. That happens
-    after pre scripts and before post scripts, so the data must be clean
-    before it, i.e. in a pre script. ``policy_note`` is created here as
-    well (with the same type the ORM would give it) because it has to
-    receive the values before the conversion.
+Why pre-, not post-
+    A pre script sees ``policy_number`` still as ``varchar`` with the raw
+    values, because the ORM converts it (``ALTER COLUMN ... TYPE int4
+    USING policy_number::int4``) only afterwards, in ``init_models()``. A
+    post or end script would never run: the cast fails inside
+    ``init_models()`` of this same module, the transaction is rolled back
+    and the values to rescue are still the uncastable strings. For the same
+    reason ``policy_note`` is created here (with the type the ORM would give
+    it) instead of waiting for the ORM: it must receive the values before
+    the conversion.
 
 What happens without it
     The cast fails on the first non-numeric value (``'AB-1234'``):

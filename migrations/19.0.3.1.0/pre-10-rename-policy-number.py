@@ -7,12 +7,16 @@ What it does
     keeps its id, its data and everything that references it (views,
     filters, exports, translations).
 
-Why pre-migration
-    It must run before the ORM loads the new model. At that point the
-    registry still has no ``policy_number`` field, so the ORM has not yet
-    created an empty column for it and has not yet removed the field it no
-    longer finds in the code. A post script would be too late: by then the
-    old column is already gone.
+Why pre-, not post-
+    A pre script runs before ``init_models()`` syncs the table with the new
+    code, so ``insurance_policy_number`` still exists with its data and
+    ``policy_number`` does not exist yet: a plain rename is possible. In a
+    post (or end) script the old column is still there (it is dropped later,
+    in ``ir.model.data._process_end()``), but the ORM has already created an
+    empty ``policy_number`` column and a new ``ir.model.fields`` record, so
+    the rename fails on the existing column and at best we could copy the
+    values while the old field record and everything linked to it are still
+    deleted at the end of the upgrade.
 
 What happens without it
     Odoo sees ``policy_number`` as a brand-new field and creates an empty
