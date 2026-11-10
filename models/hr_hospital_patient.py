@@ -10,7 +10,7 @@ class HrHospitalPatient(models.Model):
 
     name = fields.Char(required=True)
     phone = fields.Char(string='Phone')
-    insurance_policy_number = fields.Char(string='Insurance Policy Number', size=20)
+    policy_number = fields.Char(string='Insurance Policy Number', size=20)
     doctor_id = fields.Many2one(string='Personal Doctor', comodel_name='hr.hospital.doctor')
     history_ids = fields.One2many(
         comodel_name='hr.hospital.doctor.history',

@@ -6,7 +6,7 @@
             <list>
                 <field name="name" />
                 <field name="phone" />
-                <field name="insurance_policy_number" />
+                <field name="policy_number" />
                 <field name="gender" />
                 <field name="birth_date" />
                 <field name="age" />
@@ -47,7 +47,7 @@
                         <group>
                             <field name="name" />
                             <field name="phone" widget="phone" />
-                            <field name="insurance_policy_number" />
+                            <field name="policy_number" />
                             <field name="gender" />
                             <field name="birth_date" />
                             <field name="age" />
