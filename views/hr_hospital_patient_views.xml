@@ -6,7 +6,7 @@
             <list>
                 <field name="name" />
                 <field name="phone" />
-                <field name="policy_number" />
+                <field name="policy_number" options="{'format': false}" />
                 <field name="gender" />
                 <field name="birth_date" />
                 <field name="age" />
@@ -47,7 +47,8 @@
                         <group>
                             <field name="name" />
                             <field name="phone" widget="phone" />
-                            <field name="policy_number" />
+                            <field name="policy_number" options="{'format': false}" />
+                            <field name="policy_note" invisible="not policy_note" />
                             <field name="gender" />
                             <field name="birth_date" />
                             <field name="age" />

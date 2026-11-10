@@ -12,7 +12,7 @@ action that cancels overdue visits and five user groups with record rules.
     "author": "Denys Rsh",
     "maintainer": "Denys Rsh",
     "category": "Human Resources",
-    "version": "19.0.3.1.0",
+    "version": "19.0.3.2.0",
     "license": "OPL-1",
     "images": ["static/description/banner.png"],
     "application": True,
